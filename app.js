@@ -594,7 +594,11 @@ function handleBlockKeydown(e, blockId) {
         savePageToFirebase(page);
         saveToLocalStorage();
         renderBlocks();
-        focusBlock(newBlock.id, 0);
+
+        // Use requestAnimationFrame to ensure DOM is updated before focusing
+        requestAnimationFrame(() => {
+            focusBlock(newBlock.id, 0);
+        });
     }
 
     // Handle Backspace on empty block
