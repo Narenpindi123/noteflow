@@ -2,10 +2,31 @@
 
 A beautiful, Notion-inspired note-taking app with real-time cross-device synchronization.
 
-[![Live Demo](https://img.shields.io/badge/Demo-Live-blue?style=for-the-badge)](https://notion-app-azure.vercel.app)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
-![NoteFlow App](https://raw.githubusercontent.com/Narenpindi123/noteflow/main/screenshot.png)
+---
+
+## 📸 Screenshots
+
+### Main Interface
+Clean, minimal design with sidebar navigation and block-based editor.
+
+![Main Interface](screenshots/main.png)
+
+### Command Palette
+Type `/` to quickly insert any block type — headings, lists, tables, code, and more.
+
+![Command Palette](screenshots/commands.png)
+
+### Tables
+Create editable tables with add/remove row and column controls.
+
+![Table Block](screenshots/table.png)
+
+### Dark Mode
+Beautiful dark theme for comfortable night-time editing.
+
+![Dark Mode](screenshots/dark.png)
 
 ---
 
@@ -39,10 +60,7 @@ A beautiful, Notion-inspired note-taking app with real-time cross-device synchro
 
 ## 🚀 Quick Start
 
-### Option 1: Use the Live Demo
-Visit **[notion-app-azure.vercel.app](https://notion-app-azure.vercel.app)**
-
-### Option 2: Run Locally
+### Run Locally
 
 ```bash
 # Clone the repo
@@ -104,6 +122,7 @@ noteflow/
 ├── app.js                     # Application logic
 ├── firebase-config.js         # Your config (gitignored)
 ├── firebase-config.example.js # Template config
+├── screenshots/               # Documentation images
 └── README.md
 ```
 
@@ -113,7 +132,6 @@ noteflow/
 
 - **Frontend:** Vanilla HTML, CSS, JavaScript
 - **Database:** Firebase Firestore
-- **Hosting:** Vercel
 - **Fonts:** Inter (Google Fonts)
 
 ---
