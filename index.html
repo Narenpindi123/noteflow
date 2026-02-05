@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoteFlow - Your Ideas, Organized</title>
+    <meta name="description" content="A beautiful, Notion-inspired note-taking app with block-based editing">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="3" y="3" width="18" height="18" rx="3" fill="currentColor" opacity="0.2" />
+                        <path d="M8 8h8M8 12h6M8 16h4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                    </svg>
+                    <span>NoteFlow</span>
+                </div>
+                <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M15 18l-6-6 6-6" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="section-header">
+                    <span>Pages</span>
+                    <button class="add-page-btn" id="addPageBtn" aria-label="Add new page">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19" />
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                        </svg>
+                    </button>
+                </div>
+                <nav class="pages-list" id="pagesList">
+                    <!-- Pages will be dynamically inserted here -->
+                </nav>
+            </div>
+
+            <div class="sidebar-footer">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                    <svg class="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <circle cx="12" cy="12" r="5" />
+                        <path
+                            d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+                    </svg>
+                    <svg class="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                    </svg>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content" id="mainContent">
+            <div class="page-container">
+                <!-- Page Header -->
+                <header class="page-header">
+                    <div class="page-icon" id="pageIcon">📄</div>
+                    <h1 class="page-title" id="pageTitle" contenteditable="true" spellcheck="false"
+                        placeholder="Untitled"></h1>
+                </header>
+
+                <!-- Editor Area -->
+                <div class="editor" id="editor">
+                    <!-- Blocks will be dynamically inserted here -->
+                </div>
+
+                <!-- Add Block Hint -->
+                <div class="add-block-hint" id="addBlockHint">
+                    <span>Click here or press </span>
+                    <kbd>/</kbd>
+                    <span> for commands</span>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Command Palette Modal -->
+    <div class="command-palette-overlay" id="commandPaletteOverlay">
+        <div class="command-palette" id="commandPalette">
+            <div class="command-palette-header">
+                <input type="text" class="command-search" id="commandSearch" placeholder="Search for a block type...">
+            </div>
+            <div class="command-list" id="commandList">
+                <!-- Commands will be dynamically inserted -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Context Menu -->
+    <div class="context-menu" id="contextMenu">
+        <button class="context-menu-item" data-action="duplicate">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" />
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+            </svg>
+            <span>Duplicate</span>
+        </button>
+        <button class="context-menu-item" data-action="delete">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="3 6 5 6 21 6" />
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+            </svg>
+            <span>Delete</span>
+        </button>
+        <div class="context-menu-divider"></div>
+        <button class="context-menu-item" data-action="turnInto">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 3v18M3 12h18" />
+            </svg>
+            <span>Turn into...</span>
+        </button>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span class="toast-message"></span>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Firebase imports
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+        import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot, writeBatch } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+
+        // Import config from external file (copy firebase-config.example.js to firebase-config.js)
+        import firebaseConfig from './firebase-config.js';
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Make Firestore available globally
+        window.firebaseDB = db;
+        window.firebaseCollection = collection;
+        window.firebaseDoc = doc;
+        window.firebaseSetDoc = setDoc;
+        window.firebaseDeleteDoc = deleteDoc;
+        window.firebaseOnSnapshot = onSnapshot;
+        window.firebaseWriteBatch = writeBatch;
+        window.firebaseReady = true;
+
+        // Dispatch event when Firebase is ready
+        window.dispatchEvent(new Event('firebase-ready'));
+    </script>
+    <script src="app.js"></script>
+</body>
+
+</html>
