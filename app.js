@@ -642,10 +642,8 @@ function handleBlockKeydown(e, blockId) {
 
     // Handle / for command palette - only when block is empty
     if (e.key === '/' && content === '') {
-        // Let the / character be inserted first, then show palette
-        setTimeout(() => {
-            showCommandPalette(blockId);
-        }, 10);
+        e.preventDefault(); // Prevent / from being typed
+        showCommandPalette(blockId);
     }
 
     // Arrow key navigation
