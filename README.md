@@ -1,92 +1,135 @@
-# NoteFlow - Notion-Inspired Note Taking App
+# 📝 NoteFlow
 
-A beautiful, block-based note-taking application with real-time cross-device synchronization.
+A beautiful, Notion-inspired note-taking app with real-time cross-device synchronization.
 
-![NoteFlow Screenshot](https://img.shields.io/badge/NoteFlow-Live-blue)
+[![Live Demo](https://img.shields.io/badge/Demo-Live-blue?style=for-the-badge)](https://notion-app-azure.vercel.app)
+[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
+
+![NoteFlow App](https://raw.githubusercontent.com/Narenpindi123/noteflow/main/screenshot.png)
+
+---
 
 ## ✨ Features
 
-- **Block-based editing** - 12 block types including text, headings, lists, tables, code, quotes, and more
-- **Real-time sync** - Powered by Firebase Firestore for instant cross-device sync
-- **Dark mode** - Toggle between light and dark themes
-- **Drag & drop** - Reorder blocks by dragging
-- **Command palette** - Type `/` to quickly insert any block type
-- **Tables** - Create and edit tables with add/remove row/column controls
-- **Offline support** - Falls back to localStorage when offline
+| Feature | Description |
+|---------|-------------|
+| 📦 **Block-based Editor** | 12 different block types for rich content |
+| 🔄 **Real-time Sync** | Powered by Firebase Firestore |
+| 🌙 **Dark Mode** | Beautiful light and dark themes |
+| 📱 **Responsive** | Works on desktop, tablet, and mobile |
+| ⚡ **Fast** | No build step, pure vanilla JS |
+| 🔌 **Offline Support** | Falls back to localStorage |
+
+---
+
+## 🎨 Block Types
+
+- 📝 **Text** — Plain paragraph
+- 📌 **Headings** — H1, H2, H3
+- • **Bullet List** — Unordered lists
+- 1. **Numbered List** — Ordered lists
+- ☑️ **To-do** — Checkable tasks
+- 📊 **Table** — Editable tables with add/remove rows & columns
+- ❝ **Quote** — Block quotes
+- 💻 **Code** — Code snippets
+- 💡 **Callout** — Highlighted info boxes
+- — **Divider** — Visual separators
+
+---
 
 ## 🚀 Quick Start
 
-### 1. Clone the repository
+### Option 1: Use the Live Demo
+Visit **[notion-app-azure.vercel.app](https://notion-app-azure.vercel.app)**
+
+### Option 2: Run Locally
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/noteflow.git
+# Clone the repo
+git clone https://github.com/Narenpindi123/noteflow.git
 cd noteflow
-```
 
-### 2. Set up Firebase
+# Set up Firebase config
+cp firebase-config.example.js firebase-config.js
+# Edit firebase-config.js with your Firebase credentials
 
-1. Create a new project at [Firebase Console](https://console.firebase.google.com/)
-2. Enable Firestore Database
-3. Copy `firebase-config.example.js` to `firebase-config.js`
-4. Add your Firebase credentials to `firebase-config.js`
-
-### 3. Run locally
-
-Simply open `index.html` in your browser, or use a local server:
-
-```bash
+# Start a local server
 python3 -m http.server 8080
+# Open http://localhost:8080
 ```
 
-Then open http://localhost:8080
-
-## 📁 Project Structure
-
-```
-noteflow/
-├── index.html              # Main HTML file
-├── styles.css              # All styling
-├── app.js                  # Application logic
-├── firebase-config.js      # Your Firebase config (gitignored)
-├── firebase-config.example.js  # Template for Firebase config
-└── README.md
-```
+---
 
 ## 🔧 Firebase Setup
 
 1. Go to [Firebase Console](https://console.firebase.google.com/)
 2. Create a new project
-3. Go to **Build > Firestore Database** and create a database
-4. Go to **Project Settings > General** and scroll to "Your apps"
-5. Click the web icon (</>) to add a web app
-6. Copy the config object and paste into `firebase-config.js`
+3. Enable **Firestore Database** (start in test mode)
+4. Go to **Project Settings → Your Apps → Add Web App**
+5. Copy the config and paste into `firebase-config.js`:
 
-## 🎨 Block Types
+```javascript
+const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+};
 
-| Type | Description |
-|------|-------------|
-| 📝 Text | Plain paragraph text |
-| 📌 Heading 1/2/3 | Section headings |
-| • Bullet List | Unordered list items |
-| 1. Numbered List | Ordered list items |
-| ☑️ To-do List | Checkable task items |
-| 📊 Table | Editable tables |
-| ❝ Quote | Block quotes |
-| 💻 Code | Code snippets |
-| 💡 Callout | Highlighted info boxes |
-| — Divider | Visual separator |
+export default firebaseConfig;
+```
+
+---
 
 ## ⌨️ Keyboard Shortcuts
 
-- `/` - Open command palette
-- `Enter` - Create new block
-- `Backspace` - Delete empty block
-- `Tab` - Navigate table cells
+| Shortcut | Action |
+|----------|--------|
+| `/` | Open command palette |
+| `Enter` | Create new block |
+| `Backspace` | Delete empty block |
+| `Tab` | Navigate table cells |
+| `↑` `↓` | Navigate between blocks |
+
+---
+
+## 📁 Project Structure
+
+```
+noteflow/
+├── index.html                 # Main HTML
+├── styles.css                 # All styling
+├── app.js                     # Application logic
+├── firebase-config.js         # Your config (gitignored)
+├── firebase-config.example.js # Template config
+└── README.md
+```
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend:** Vanilla HTML, CSS, JavaScript
+- **Database:** Firebase Firestore
+- **Hosting:** Vercel
+- **Fonts:** Inter (Google Fonts)
+
+---
 
 ## 📄 License
 
-MIT License - feel free to use this project for any purpose.
+MIT License — feel free to use this project for any purpose.
 
-## 🤝 Contributing
+---
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+## 🙏 Acknowledgments
+
+Inspired by [Notion](https://notion.so) — the all-in-one workspace.
+
+---
+
+<p align="center">
+  Made with ❤️ by <a href="https://github.com/Narenpindi123">Naren</a>
+</p>
