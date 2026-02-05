@@ -32,7 +32,9 @@ let state = {
     currentPageId: null,
     draggedBlockId: null,
     firebaseReady: false,
-    unsubscribe: null // For Firebase listener cleanup
+    unsubscribe: null, // For Firebase listener cleanup
+    isEditing: false,  // Prevent re-renders while editing
+    pendingFocusBlockId: null // Block to focus after render
 };
 
 // ===========================================
@@ -108,9 +110,11 @@ function setupFirebaseListener() {
                 state.currentPageId = pages[0].id;
             }
 
-            // Re-render
-            renderPagesList();
-            renderPage();
+            // Re-render only if not currently editing
+            if (!state.isEditing) {
+                renderPagesList();
+                renderPage();
+            }
 
             // Show sync indicator
             showSyncIndicator();
@@ -426,7 +430,16 @@ function createBlockElement(block, index) {
     content.addEventListener('input', () => handleBlockInput(block.id, content));
     content.addEventListener('keydown', (e) => handleBlockKeydown(e, block.id));
     content.addEventListener('paste', handlePaste);
-    content.addEventListener('focus', () => handleBlockFocus(block.id));
+    content.addEventListener('focus', () => {
+        state.isEditing = true;
+        handleBlockFocus(block.id);
+    });
+    content.addEventListener('blur', () => {
+        // Small delay to allow Enter key handling to complete
+        setTimeout(() => {
+            state.isEditing = false;
+        }, 100);
+    });
 
     blockEl.appendChild(content);
 
@@ -622,8 +635,8 @@ function handleBlockKeydown(e, blockId) {
         // Could implement indentation here
     }
 
-    // Handle / for command palette - insert / and show palette
-    if (e.key === '/') {
+    // Handle / for command palette - only when block is empty
+    if (e.key === '/' && content === '') {
         // Let the / character be inserted first, then show palette
         setTimeout(() => {
             showCommandPalette(blockId);
@@ -680,28 +693,41 @@ function focusBlock(blockId, cursorPos = null) {
     const content = blockEl.querySelector('.block-content');
     if (!content) return;
 
+    // Focus the content element
     content.focus();
 
-    if (cursorPos !== null) {
-        const range = document.createRange();
-        const sel = window.getSelection();
+    // Set cursor position
+    const sel = window.getSelection();
+    const range = document.createRange();
 
-        const textNode = content.firstChild || content;
-        const maxPos = textNode.textContent ? textNode.textContent.length : 0;
-        const pos = Math.min(cursorPos, maxPos);
+    try {
+        if (content.childNodes.length === 0 || content.textContent === '') {
+            // Empty block - just set cursor at start
+            range.selectNodeContents(content);
+            range.collapse(true);
+        } else if (cursorPos !== null) {
+            const textNode = content.firstChild;
+            const maxPos = textNode.textContent ? textNode.textContent.length : 0;
+            const pos = Math.min(cursorPos, maxPos);
 
-        try {
             if (textNode.nodeType === Node.TEXT_NODE) {
                 range.setStart(textNode, pos);
+                range.collapse(true);
             } else {
-                range.setStart(textNode, 0);
+                range.selectNodeContents(content);
+                range.collapse(cursorPos === 0);
             }
-            range.collapse(true);
-            sel.removeAllRanges();
-            sel.addRange(range);
-        } catch (err) {
-            // Fallback: just focus the element
+        } else {
+            // No position specified, put cursor at end
+            range.selectNodeContents(content);
+            range.collapse(false);
         }
+
+        sel.removeAllRanges();
+        sel.addRange(range);
+    } catch (err) {
+        // Fallback: just focus
+        content.focus();
     }
 }
 
