@@ -917,7 +917,12 @@ function showCommandPalette(blockId) {
 
     overlay.classList.add('active');
     search.value = '';
-    search.focus();
+
+    // Focus search bar with delay to ensure overlay is visible
+    setTimeout(() => {
+        search.focus();
+        search.select();
+    }, 50);
 
     // Update selection
     updateCommandSelection();
