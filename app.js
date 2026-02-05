@@ -34,6 +34,7 @@ let state = {
     firebaseReady: false,
     unsubscribe: null, // For Firebase listener cleanup
     isEditing: false,  // Prevent re-renders while editing
+    focusedBlockId: null, // Currently focused block
     pendingFocusBlockId: null // Block to focus after render
 };
 
@@ -432,13 +433,17 @@ function createBlockElement(block, index) {
     content.addEventListener('paste', handlePaste);
     content.addEventListener('focus', () => {
         state.isEditing = true;
+        state.focusedBlockId = block.id;
         handleBlockFocus(block.id);
     });
     content.addEventListener('blur', () => {
-        // Small delay to allow Enter key handling to complete
+        // Longer delay to allow for brief pauses while typing
         setTimeout(() => {
-            state.isEditing = false;
-        }, 100);
+            // Only clear editing state if user hasn't focused another block
+            if (state.focusedBlockId === block.id) {
+                state.isEditing = false;
+            }
+        }, 500);
     });
 
     blockEl.appendChild(content);
